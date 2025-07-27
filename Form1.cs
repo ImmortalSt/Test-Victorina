@@ -30,6 +30,7 @@ namespace Test_Victorina
 	                    Login_User	VARCHAR(50) NOT NULL UNIQUE,
 	                    Password_User	VARCHAR(50) NOT NULL UNIQUE
                         
+
                         );
 
                     CREATE TABLE IF NOT EXISTS Cataloge (
