@@ -49,8 +49,10 @@ namespace Test_Victorina
         //чтение из БД Каталога тем
         private static List<string> ValidateCataloge()
         {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
             List<string> list = new List<string>();
-            using (var connection = new SQLiteConnection("Data Source = Test.db"))
+            using (var connection = new SQLiteConnection(connect))
             {
                 connection.Open();
                 string selectCataloge = "SELECT Thema FROM Cataloge";
@@ -72,8 +74,9 @@ namespace Test_Victorina
         //получить количество вопросов на заданную тему
         private static int ValidateCountToThema(string thema)
         {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
             int count = 0;
-            using (var connection = new SQLiteConnection("Data Source = Test.db"))
+            using (var connection = new SQLiteConnection(connect))
             {
                 connection.Open();
                 string selectCataloge = "SELECT COUNT() FROM Question INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat WHERE Cataloge.Thema = @thema";
@@ -109,8 +112,10 @@ namespace Test_Victorina
         //получение списка вопросов
         private static List<string> GetQuestionsByThema(string thema)
         {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
             List<string> questions = new List<string>();
-            using (var connection = new SQLiteConnection("Data Source = Test.db"))
+            using (var connection = new SQLiteConnection(connect))
             {
                 connection.Open();
                 string selectQuestions = @"SELECT Question.Quest FROM Question INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat
@@ -135,8 +140,10 @@ namespace Test_Victorina
         //получение списка ответов
         private static List<string> GetAnswerByThema(string thema, string question)
         {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
             List<string> answer = new List<string>();
-            using (var connection = new SQLiteConnection("Data Source = Test.db"))
+            using (var connection = new SQLiteConnection(connect))
             {
                 connection.Open();
                 string selectQuestions = @"SELECT Answer.Answ_Option 
@@ -164,8 +171,10 @@ namespace Test_Victorina
         //получить правильный ответ
         private static List<string> GetRightAnswerByThema(string thema, string question)
         {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
             List<string> RAnswer = new List<string>();
-            using (var connection = new SQLiteConnection("Data Source = Test.db"))
+            using (var connection = new SQLiteConnection(connect))
             {
                 connection.Open();
                 string selectQuestions = @"SELECT RightAnswer.RAnsw
