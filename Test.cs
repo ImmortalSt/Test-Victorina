@@ -1,22 +1,29 @@
-﻿using System;
+﻿using MySqlConnector;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SQLite;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace Test_Victorina
 {
     public partial class Test : Form
     {
+        // Сохраняем ссылку на существующую форму входа
+        private Form1_Enter _form1Enter;
+
         public Test()
         {
             InitializeComponent();
+        }
+
+        // Конструктор для передачи ссылки на форму
+        public Test(Form1_Enter form1Enter)
+        {
+            if (form1Enter == null)
+            {
+                throw new ArgumentNullException(nameof(form1Enter), "Форма входа не может быть null");
+            }
+
+            _form1Enter = form1Enter;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -40,10 +47,6 @@ namespace Test_Victorina
             // обработчик события для изменения выбранной темы
             cB_Cataloge.SelectedIndexChanged += cB_Cataloge_SelectedIndexChanged;
 
-
-
-
-
         }
 
         //чтение из БД Каталога тем
@@ -52,11 +55,11 @@ namespace Test_Victorina
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
             List<string> list = new List<string>();
-            using (var connection = new SQLiteConnection(connect))
+            using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
                 string selectCataloge = "SELECT Thema FROM Cataloge";
-                using (var command = new SQLiteCommand(selectCataloge, connection))
+                using (var command = new MySqlCommand(selectCataloge, connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {
@@ -75,12 +78,13 @@ namespace Test_Victorina
         private static int ValidateCountToThema(string thema)
         {
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
             int count = 0;
-            using (var connection = new SQLiteConnection(connect))
+            using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
-                string selectCataloge = "SELECT COUNT() FROM Question INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat WHERE Cataloge.Thema = @thema";
-                using (var command = new SQLiteCommand(selectCataloge, connection))
+                string selectCataloge = "SELECT COUNT(*) FROM Question INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat WHERE Cataloge.Thema = @thema";
+                using (var command = new MySqlCommand(selectCataloge, connection))
                 {
                     command.Parameters.AddWithValue("@thema", thema);
                     using (var reader = command.ExecuteReader())
@@ -115,12 +119,12 @@ namespace Test_Victorina
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
             List<string> questions = new List<string>();
-            using (var connection = new SQLiteConnection(connect))
+            using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
                 string selectQuestions = @"SELECT Question.Quest FROM Question INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat
                                             WHERE Cataloge.Thema = @thema";
-                using (var command = new SQLiteCommand(selectQuestions, connection))
+                using (var command = new MySqlCommand(selectQuestions, connection))
                 {
                     command.Parameters.AddWithValue("@thema", thema);
                     using (var reader = command.ExecuteReader())
@@ -143,15 +147,16 @@ namespace Test_Victorina
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
             List<string> answer = new List<string>();
-            using (var connection = new SQLiteConnection(connect))
+            using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
                 string selectQuestions = @"SELECT Answer.Answ_Option 
-                                            FROM Question, Answer 
+                                            FROM Question
+                                            INNER JOIN Answer ON Answer.ID_Ques = Question.ID_Quest
                                             INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat
-                                            WHERE Cataloge.Thema = @thema AND Answer.ID_Ques = Question.ID_Quest
+                                            WHERE Cataloge.Thema = @thema 
                                             AND Question.Quest = @question";
-                using (var command = new SQLiteCommand(selectQuestions, connection))
+                using (var command = new MySqlCommand(selectQuestions, connection))
                 {
                     command.Parameters.AddWithValue("@thema", thema);
                     command.Parameters.AddWithValue("@question", question);
@@ -174,7 +179,7 @@ namespace Test_Victorina
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
             List<string> RAnswer = new List<string>();
-            using (var connection = new SQLiteConnection(connect))
+            using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
                 string selectQuestions = @"SELECT RightAnswer.RAnsw
@@ -183,7 +188,7 @@ namespace Test_Victorina
                                             INNER JOIN Answer ON Answer.ID_Ques = Question.ID_Quest
                                             INNER JOIN RightAnswer ON RightAnswer.RAnsw = Answer.Answ_Option
                                             WHERE Cataloge.Thema = @thema AND Question.Quest = @question";
-                using (var command = new SQLiteCommand(selectQuestions, connection))
+                using (var command = new MySqlCommand(selectQuestions, connection))
                 {
                     command.Parameters.AddWithValue("@thema", thema);
                     command.Parameters.AddWithValue("@question", question);
@@ -200,10 +205,120 @@ namespace Test_Victorina
             return RAnswer;
         }
 
+        // Получить ID пользователя
+        private int GetIDUser()
+        {
+            // Проверяем, что форма существует
+            if (_form1Enter == null)
+            {
+                throw new InvalidOperationException("Форма входа не инициализирована");
+            }
+
+            string login = _form1Enter.UserLogin;
+
+            if (string.IsNullOrEmpty(login))
+            {
+                throw new InvalidOperationException("Логин не указан");
+            }
+
+            int idUser = 0;
+
+            // код для получения ID пользователя
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
+            using (var connection = new MySqlConnection(connect))
+            {
+                connection.Open();
+                string selectID = @"SELECT ID FROM LoginPassword
+                                    WHERE LoginPassword.Name_User = @login";
+
+                var command = new MySqlCommand(selectID, connection);
+                command.Parameters.AddWithValue("@login", login);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string nameUser = reader.GetString(2);
+                        if (nameUser == login)
+                        {
+                            idUser = reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            return idUser;
+        }
+
+        // Получить ID темы
+        private int GetIDThema()
+        {
+            // Получаем логин из существующей формы
+            string thema = cB_Cataloge.SelectedItem?.ToString();
+            int idCat = 0;
+
+            // код для получения ID пользователя
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
+            using (var connection = new MySqlConnection(connect))
+            {
+                connection.Open();
+                string selectID = @"SELECT ID FROM Cataloge
+                                    WHERE Cataloge.Thema = @thema";
+
+                var command = new MySqlCommand(selectID, connection);
+                command.Parameters.AddWithValue("@Thema", thema);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string nameThema = reader.GetString(1);
+                        if (nameThema == thema)
+                        {
+                            idCat = reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            return idCat;
+        }
+
+        //записать результат в БД
+        private void SaveResult(int RAnswerUser, int AnswerUser, float result, int idCat, int idUser)
+        {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
+            string thema = cB_Cataloge.SelectedItem?.ToString();
+            idCat = ValidateCountToThema(thema);
+
+            using (var connection = new MySqlConnection(connect))
+            {
+                connection.Open();
+
+                string insertResult = @"INSERT INTO Result (RAnswerUser, AnswerUser, Prosert, ID_User, ID_Cat)
+                                            VALUES(@RAnswerUser, @AnswerUser, @Prosert, @ID_User, @ID_Cat)";
+
+                using (var insertcmd = new MySqlCommand(insertResult, connection))
+                {
+                    insertcmd.Parameters.AddWithValue("@RAnswerUser", RAnswerUser);
+                    insertcmd.Parameters.AddWithValue("@AnswerUser", AnswerUser);
+                    insertcmd.Parameters.AddWithValue("@Prosent", result);
+                    insertcmd.Parameters.AddWithValue("@ID_Cat", idCat);
+                    insertcmd.Parameters.AddWithValue("@ID_User", idUser);
+
+                    insertcmd.ExecuteNonQuery();
+                }
+            }
+
+        }
+
         private int currentQuestionIndex = 0;
-        private List<string> currentQuestions;
-        private List<string> currentAnswers;
-        private List<string> currentRightAnswers;
+        private List<string> currentQuestions;          //список ответов
+        private List<string> currentAnswers;            //список вопросов
+        private List<string> currentRightAnswers;       //список правильных ответов
+        private int AnswerUser = 0;                     //список ответов пользователя
+        private int RAnswerUser = 0;                    //список правильных ответов пользователя
 
         //начать тест
         private void btn_Start_Click(object sender, EventArgs e)
@@ -254,10 +369,20 @@ namespace Test_Victorina
                 checkBox1.Checked = false;
                 checkBox2.Checked = false;
                 checkBox3.Checked = false;
+                label_RAnsw1.Text = string.Empty;
+                label_RAnsw2.Text = string.Empty;
             }
             else
             {
-                MessageBox.Show("Тест завершен.");
+                string thema = cB_Cataloge.SelectedItem?.ToString();
+                int count = ValidateCountToThema(thema);
+                float result = 100 * RAnswerUser / (float)count;
+
+                int idUser = GetIDUser();
+                int idCat = GetIDThema();
+                SaveResult(RAnswerUser, AnswerUser, result, idCat, idUser);
+
+                MessageBox.Show($"Тест завершен.\nВаш результат: {result}");
             }
         }
 
@@ -301,19 +426,22 @@ namespace Test_Victorina
                     {
                         label_RAnsw2.Text = currentRightAnswers[1];
                     }
+                    RAnswerUser++;
                     MessageBox.Show("Правильный ответ!");
                 }
                 else
                 {
+                    AnswerUser++;
                     MessageBox.Show("Неправильный ответ.");
                 }
 
                 currentQuestionIndex++;
+
                 ShowNextQuestion();
             }
         }
 
-       
+
 
     }
 }

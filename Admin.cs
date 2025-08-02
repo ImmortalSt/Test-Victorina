@@ -16,6 +16,7 @@ namespace Test_Victorina
         private static void AddCataloge(string thema)
         {
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
             using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
