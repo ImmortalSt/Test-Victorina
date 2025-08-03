@@ -32,5 +32,14 @@ namespace Test_Victorina
             Test test = new Test(_login);
             test.ShowDialog();
         }
+
+        //показ рейтинга всех участников
+
+
+        private void button_Reting_Click(object sender, EventArgs e)
+        {
+            AllRating allRating = new AllRating();
+            allRating.ShowDialog();
+        }
     }
 }

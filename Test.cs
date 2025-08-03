@@ -317,12 +317,16 @@ namespace Test_Victorina
                 }
                 else
                 {
-                    MessageBox.Show("Нет вопросов для выбранной темы.");
+                    var msgError = new MsgBoxError("Нет вопросов для выбранной темы", "Выбор вопросов");
+                    msgError.ShowDialog();
+                    //MessageBox.Show("Нет вопросов для выбранной темы.");
                 }
             }
             else
             {
-                MessageBox.Show("Выберите тему для теста");
+                var msgError = new MsgBoxError("Выберите тему для теста", "Выбор темы");
+                msgError.ShowDialog();
+                //MessageBox.Show("Выберите тему для теста");
             }
         }
 
@@ -361,7 +365,9 @@ namespace Test_Victorina
                 int idCat = GetIDThema();
                 SaveResult(RAnswerUser, AnswerUser, result, idCat, idUser);
 
-                MessageBox.Show($"Тест завершен.\nВаш результат: {result} %");
+                var msg = new MsgBox($"Тест завершен.\nВаш результат: {result} %", "Результат");
+                msg.ShowDialog();
+                //MessageBox.Show($"Тест завершен.\nВаш результат: {result} %");
             }
         }
 
@@ -406,12 +412,16 @@ namespace Test_Victorina
                         label_RAnsw2.Text = currentRightAnswers[1];
                     }
                     RAnswerUser++;
-                    MessageBox.Show("Правильный ответ!");
+                    var msg = new MsgBox("Правильный ответ", "Результат");
+                    msg.ShowDialog();
+                    //MessageBox.Show("Правильный ответ!");
                 }
                 else
                 {
                     AnswerUser++;
-                    MessageBox.Show("Неправильный ответ.");
+                    var msgError = new MsgBoxError("Неправильный ответ", "Результат");
+                    msgError.ShowDialog();
+                    //MessageBox.Show("Неправильный ответ.");
                 }
 
                 currentQuestionIndex++;

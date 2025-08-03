@@ -109,6 +109,12 @@
     <Compile Include="AdminDelete.Designer.cs">
       <DependentUpon>AdminDelete.cs</DependentUpon>
     </Compile>
+    <Compile Include="AllRating.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllRating.Designer.cs">
+      <DependentUpon>AllRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminDelete.resx">
       <DependentUpon>AdminDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllRating.resx">
+      <DependentUpon>AllRating.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

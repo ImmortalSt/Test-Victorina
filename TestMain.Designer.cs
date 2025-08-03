@@ -83,6 +83,7 @@
             this.button_Reting.TabIndex = 13;
             this.button_Reting.Text = "Рейтинг";
             this.button_Reting.UseVisualStyleBackColor = true;
+            this.button_Reting.Click += new System.EventHandler(this.button_Reting_Click);
             // 
             // button_MyReting
             // 
