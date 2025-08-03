@@ -53,10 +53,10 @@ namespace Test_Victorina
                         ID_Result INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
                         RAnswerUser INTEGER,
                         AnswerUser INTEGER,
-                        Prosent FLOAT(2, 2),
+                        Prosent FLOAT,
                         ID_User INTEGER,
                         ID_Cat INTEGER,
-                        FOREIGN KEY(ID_Cat) REFERENCES Cataloge(ID_Cat))";
+                        FOREIGN KEY(ID_User) REFERENCES LoginPassword(ID))";
 
                 using (var command = new MySqlCommand(createTableSql, connection))
                 {
@@ -96,11 +96,6 @@ namespace Test_Victorina
             }
         }
 
-        public string UserLogin
-        {
-            get { return textBox_Log.Text; }
-        }
-
         private void textBox_Pas_TextChanged(object sender, EventArgs e)
         {
             // Сохраняем оригинальный текст
@@ -116,7 +111,7 @@ namespace Test_Victorina
             int count = ValidateUser(login, password);
             if (count == 1)
             {
-                TestMain testMain = new TestMain();
+                TestMain testMain = new TestMain(login);
                 testMain.ShowDialog();
 
             }

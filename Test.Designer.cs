@@ -45,6 +45,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.label_User = new System.Windows.Forms.Label();
+            this.label_NameUser = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cB_Cataloge
@@ -222,11 +224,33 @@
             this.checkBox3.Text = "...";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
+            // label_User
+            // 
+            this.label_User.AutoSize = true;
+            this.label_User.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_User.Location = new System.Drawing.Point(345, 15);
+            this.label_User.Name = "label_User";
+            this.label_User.Size = new System.Drawing.Size(30, 25);
+            this.label_User.TabIndex = 26;
+            this.label_User.Text = "...";
+            // 
+            // label_NameUser
+            // 
+            this.label_NameUser.AutoSize = true;
+            this.label_NameUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_NameUser.Location = new System.Drawing.Point(174, 15);
+            this.label_NameUser.Name = "label_NameUser";
+            this.label_NameUser.Size = new System.Drawing.Size(165, 25);
+            this.label_NameUser.TabIndex = 25;
+            this.label_NameUser.Text = "Пользователь: ";
+            // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1004, 561);
+            this.Controls.Add(this.label_User);
+            this.Controls.Add(this.label_NameUser);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -271,5 +295,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Label label_User;
+        private System.Windows.Forms.Label label_NameUser;
     }
 }

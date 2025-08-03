@@ -5,9 +5,15 @@ namespace Test_Victorina
 {
     public partial class TestMain : Form
     {
-        public TestMain()
+        private string _login;
+
+        // Конструктор для передачи ссылки на форму
+        public TestMain(string login)
         {
             InitializeComponent();
+            _login = login;
+            label_User.Text = login;
+            int a = 0;
         }
 
         private void button_Exit_Click(object sender, EventArgs e)
@@ -23,7 +29,7 @@ namespace Test_Victorina
 
         private void button_Test_Click(object sender, EventArgs e)
         {
-            Test test = new Test();
+            Test test = new Test(_login);
             test.ShowDialog();
         }
     }

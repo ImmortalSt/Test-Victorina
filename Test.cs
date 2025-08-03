@@ -8,22 +8,14 @@ namespace Test_Victorina
     public partial class Test : Form
     {
         // Сохраняем ссылку на существующую форму входа
-        private Form1_Enter _form1Enter;
-
-        public Test()
-        {
-            InitializeComponent();
-        }
+        private string _login;
 
         // Конструктор для передачи ссылки на форму
-        public Test(Form1_Enter form1Enter)
+        public Test(string login)
         {
-            if (form1Enter == null)
-            {
-                throw new ArgumentNullException(nameof(form1Enter), "Форма входа не может быть null");
-            }
-
-            _form1Enter = form1Enter;
+            InitializeComponent();
+            _login = login;
+            label_User.Text = login;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -208,15 +200,9 @@ namespace Test_Victorina
         // Получить ID пользователя
         private int GetIDUser()
         {
-            // Проверяем, что форма существует
-            if (_form1Enter == null)
-            {
-                throw new InvalidOperationException("Форма входа не инициализирована");
-            }
+            string user = _login;
 
-            string login = _form1Enter.UserLogin;
-
-            if (string.IsNullOrEmpty(login))
+            if (string.IsNullOrEmpty(user))
             {
                 throw new InvalidOperationException("Логин не указан");
             }
@@ -233,17 +219,13 @@ namespace Test_Victorina
                                     WHERE LoginPassword.Name_User = @login";
 
                 var command = new MySqlCommand(selectID, connection);
-                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@login", user);
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        string nameUser = reader.GetString(2);
-                        if (nameUser == login)
-                        {
-                            idUser = reader.GetInt32(0);
-                        }
+                        idUser = reader.GetInt32(0);
                     }
                 }
             }
@@ -257,13 +239,13 @@ namespace Test_Victorina
             string thema = cB_Cataloge.SelectedItem?.ToString();
             int idCat = 0;
 
-            // код для получения ID пользователя
+            // код для получения ID темы
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
             using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
-                string selectID = @"SELECT ID FROM Cataloge
+                string selectID = @"SELECT ID_Cat FROM Cataloge
                                     WHERE Cataloge.Thema = @thema";
 
                 var command = new MySqlCommand(selectID, connection);
@@ -271,14 +253,11 @@ namespace Test_Victorina
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        string nameThema = reader.GetString(1);
-                        if (nameThema == thema)
-                        {
-                            idCat = reader.GetInt32(0);
-                        }
+                        idCat = reader.GetInt32(0);
                     }
+
                 }
             }
             return idCat;
@@ -289,15 +268,15 @@ namespace Test_Victorina
         {
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
-            string thema = cB_Cataloge.SelectedItem?.ToString();
-            idCat = ValidateCountToThema(thema);
+            //string thema = cB_Cataloge.SelectedItem?.ToString();
+            idCat = GetIDThema();
 
             using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
 
-                string insertResult = @"INSERT INTO Result (RAnswerUser, AnswerUser, Prosert, ID_User, ID_Cat)
-                                            VALUES(@RAnswerUser, @AnswerUser, @Prosert, @ID_User, @ID_Cat)";
+                string insertResult = @"INSERT INTO Result (RAnswerUser, AnswerUser, Prosent, ID_User, ID_Cat)
+                                            VALUES(@RAnswerUser, @AnswerUser, @Prosent, @ID_User, @ID_Cat)";
 
                 using (var insertcmd = new MySqlCommand(insertResult, connection))
                 {
@@ -382,7 +361,7 @@ namespace Test_Victorina
                 int idCat = GetIDThema();
                 SaveResult(RAnswerUser, AnswerUser, result, idCat, idUser);
 
-                MessageBox.Show($"Тест завершен.\nВаш результат: {result}");
+                MessageBox.Show($"Тест завершен.\nВаш результат: {result} %");
             }
         }
 

@@ -38,13 +38,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button_Exit = new System.Windows.Forms.Button();
+            this.label_NameUser = new System.Windows.Forms.Label();
+            this.label_User = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelMain
             // 
             this.labelMain.AutoSize = true;
             this.labelMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMain.Location = new System.Drawing.Point(249, 21);
+            this.labelMain.Location = new System.Drawing.Point(249, 26);
             this.labelMain.Name = "labelMain";
             this.labelMain.Size = new System.Drawing.Size(448, 39);
             this.labelMain.TabIndex = 0;
@@ -143,11 +145,33 @@
             this.button_Exit.UseVisualStyleBackColor = true;
             this.button_Exit.Click += new System.EventHandler(this.button_Exit_Click);
             // 
+            // label_NameUser
+            // 
+            this.label_NameUser.AutoSize = true;
+            this.label_NameUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_NameUser.Location = new System.Drawing.Point(318, 100);
+            this.label_NameUser.Name = "label_NameUser";
+            this.label_NameUser.Size = new System.Drawing.Size(165, 25);
+            this.label_NameUser.TabIndex = 19;
+            this.label_NameUser.Text = "Пользователь: ";
+            // 
+            // label_User
+            // 
+            this.label_User.AutoSize = true;
+            this.label_User.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_User.Location = new System.Drawing.Point(489, 100);
+            this.label_User.Name = "label_User";
+            this.label_User.Size = new System.Drawing.Size(30, 25);
+            this.label_User.TabIndex = 20;
+            this.label_User.Text = "...";
+            // 
             // TestMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 617);
+            this.Controls.Add(this.label_User);
+            this.Controls.Add(this.label_NameUser);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -177,5 +201,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button_Exit;
+        private System.Windows.Forms.Label label_NameUser;
+        private System.Windows.Forms.Label label_User;
     }
 }
