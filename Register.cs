@@ -59,13 +59,20 @@ namespace Test_Victorina
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(log) || string.IsNullOrEmpty(pass))
             {
-                MessageBox.Show("Вы пропустили обязательное поле!");
+                MessageBox.Show(
+                    "Вы пропустили обязательное поле!",
+                    "Ошибка регистрации",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
 
             AddUser(name, log, pass);
 
-            MessageBox.Show("Регистрация прошла успешно!");
+            var msg = new MsgBox("Регистрация прошла успешно!", "Регистрация");
+            msg.ShowDialog();
+            //MessageBox.Show("Pегистрация прошла успешно!");
             Hide();
         }
     }

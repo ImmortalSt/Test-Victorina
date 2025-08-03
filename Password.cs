@@ -25,7 +25,12 @@ namespace Test_Victorina
             }
             else
             {
-                MessageBox.Show("Неверный логин или пароль. Пожалуйста, попробуйте снова");
+                MessageBox.Show(
+                    "Неверный пароль.\nПожалуйста, попробуйте снова",
+                    "Ошибка авторизации",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
             }
         }
     }
