@@ -25,7 +25,9 @@ namespace Test_Victorina
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Hide();
+            TestMain testMain = new TestMain(_login);
+            testMain.ShowDialog();
         }
 
         private void Test_Load(object sender, EventArgs e)
@@ -174,11 +176,10 @@ namespace Test_Victorina
             using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
-                string selectQuestions = @"SELECT RightAnswer.RAnsw
-                                            FROM Question
-                                            INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat
-                                            INNER JOIN Answer ON Answer.ID_Ques = Question.ID_Quest
-                                            INNER JOIN RightAnswer ON RightAnswer.RAnsw = Answer.Answ_Option
+                string selectQuestions = @"SELECT RightAnswer.RAnsw 
+                                            FROM Question 
+                                            INNER JOIN Cataloge ON Question.ID_Cat = Cataloge.ID_Cat 
+                                            INNER JOIN RightAnswer ON RightAnswer.ID_Quest = Question.ID_Quest                                            
                                             WHERE Cataloge.Thema = @thema AND Question.Quest = @question";
                 using (var command = new MySqlCommand(selectQuestions, connection))
                 {
@@ -292,6 +293,40 @@ namespace Test_Victorina
 
         }
 
+        //обновить результат в БД
+        private void UpDateResult(int RAnswerUser, int AnswerUser, float result, int idCat, int idUser)
+        {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
+            //string thema = cB_Cataloge.SelectedItem?.ToString();
+            idCat = GetIDThema();
+
+            using (var connection = new MySqlConnection(connect))
+            {
+                connection.Open();
+
+                string updateResult = @"UPDATE Result SET 
+                                            RAnswerUser = @RAnswerUser, 
+                                            AnswerUser = @AnswerUser, 
+                                            Prosent = @Prosent, 
+                                            ID_User = @ID_User, 
+                                            ID_Cat = @ID_Cat
+                                            WHERE ID_User = @ID_User AND ID_Cat = @ID_Cat";
+
+                using (var insertcmd = new MySqlCommand(updateResult, connection))
+                {
+                    insertcmd.Parameters.AddWithValue("@RAnswerUser", RAnswerUser);
+                    insertcmd.Parameters.AddWithValue("@AnswerUser", AnswerUser);
+                    insertcmd.Parameters.AddWithValue("@Prosent", result);
+                    insertcmd.Parameters.AddWithValue("@ID_Cat", idCat);
+                    insertcmd.Parameters.AddWithValue("@ID_User", idUser);
+
+                    insertcmd.ExecuteNonQuery();
+                }
+            }
+
+        }
+
         private int currentQuestionIndex = 0;
         private List<string> currentQuestions;          //список ответов
         private List<string> currentAnswers;            //список вопросов
@@ -363,45 +398,114 @@ namespace Test_Victorina
 
                 int idUser = GetIDUser();
                 int idCat = GetIDThema();
-                SaveResult(RAnswerUser, AnswerUser, result, idCat, idUser);
 
-                var msg = new MsgBox($"Тест завершен.\nВаш результат: {result} %", "Результат");
-                msg.ShowDialog();
-                //MessageBox.Show($"Тест завершен.\nВаш результат: {result} %");
+                //получить предыдущий результат и сравнить с новым,
+                //если новый лучше его записать и показать,
+                //если нет, то не записывать новый и показать новый и старый
+                float prevResult = GetPreviousResult();
+
+
+                if (prevResult == 0)
+                {
+                    SaveResult(RAnswerUser, AnswerUser, result, idCat, idUser);
+                    var msg = new MsgBox($"Тест завершен.\nВаш результат: {result} %", "Результат");
+                    msg.ShowDialog();
+
+                    Hide();
+                    TestMain testMain = new TestMain(_login);
+                    testMain.ShowDialog();
+                }
+
+                if (prevResult < result)
+                {
+                    UpDateResult(RAnswerUser, AnswerUser, result, idCat, idUser);
+                    var msg = new MsgBox($"Тест завершен.\nВаш результат: {result} %", "Результат");
+                    msg.ShowDialog();
+
+                    Hide();
+                    TestMain testMain = new TestMain(_login);
+                    testMain.ShowDialog();
+                }
+                else if (prevResult > result)
+                {
+                    var msg = new MsgBox($"Тест завершен.\nВаш предыдущий результат лучше: {prevResult} %\n" +
+                                         $"Ваш новый результат: {result}", "Результат");
+                    msg.ShowDialog();
+
+                    Hide();
+                    TestMain testMain = new TestMain(_login);
+                    testMain.ShowDialog();
+                }
             }
+
         }
 
-        private void btn_Answ_Click(object sender, EventArgs e)
+        //получить предыдущий результат
+        private float GetPreviousResult()
         {
-            if (currentQuestionIndex < currentQuestions.Count)
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+            float result = 0;
+            string thema = cB_Cataloge.Text.Trim();
+
+            using (var connection = new MySqlConnection(connect))
             {
-                List<string> selectedAnswers = new List<string>();
+                connection.Open();
 
-                if (checkBox1.Checked)
-                {
-                    selectedAnswers.Add(checkBox1.Text);
-                }
-                if (checkBox2.Checked)
-                {
-                    selectedAnswers.Add(checkBox2.Text);
-                }
-                if (checkBox3.Checked)
-                {
-                    selectedAnswers.Add(checkBox3.Text);
-                }
+                string selectSql = @"SELECT Prosent
+                                        FROM Result r
+                                        INNER JOIN LoginPassword lg ON r.ID_User = lg.ID
+                                        INNER JOIN Cataloge c ON r.ID_Cat = c.ID_Cat
+                                        WHERE Login_User = @Login_User and Thema = @thema";
 
-                bool allCorrect = true;
-                foreach (var answer in selectedAnswers)
+                var command = new MySqlCommand(selectSql, connection);
+
+                command.Parameters.AddWithValue("@Login_User", _login);
+                command.Parameters.AddWithValue("@Thema", thema);
+
+                using (var reader = command.ExecuteReader())
                 {
-                    if (!currentRightAnswers.Contains(answer))
+                    if (reader.Read())
                     {
-                        allCorrect = false;
-                        break;
+                        result = reader.GetFloat(0);
                     }
                 }
+            }
 
-                if (allCorrect)
+            return result;
+        }
+
+        //ответить на вопрос
+        private void btn_Answ_Click(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked || checkBox2.Checked || checkBox3.Checked)
+            {
+                if (currentQuestionIndex < currentQuestions.Count)
                 {
+                    List<string> selectedAnswers = new List<string>();
+
+                    if (checkBox1.Checked)
+                    {
+                        selectedAnswers.Add(checkBox1.Text);
+                    }
+                    if (checkBox2.Checked)
+                    {
+                        selectedAnswers.Add(checkBox2.Text);
+                    }
+                    if (checkBox3.Checked)
+                    {
+                        selectedAnswers.Add(checkBox3.Text);
+                    }
+
+                    bool allCorrect = true;
+                    foreach (var answer in selectedAnswers)
+                    {
+                        if (!currentRightAnswers.Contains(answer))
+                        {
+                            allCorrect = false;
+                            break;
+                        }
+                    }
+
                     // Отображение правильных ответов
                     if (currentRightAnswers.Count > 0)
                     {
@@ -411,26 +515,32 @@ namespace Test_Victorina
                     {
                         label_RAnsw2.Text = currentRightAnswers[1];
                     }
-                    RAnswerUser++;
-                    var msg = new MsgBox("Правильный ответ", "Результат");
-                    msg.ShowDialog();
-                    //MessageBox.Show("Правильный ответ!");
-                }
-                else
-                {
-                    AnswerUser++;
-                    var msgError = new MsgBoxError("Неправильный ответ", "Результат");
-                    msgError.ShowDialog();
-                    //MessageBox.Show("Неправильный ответ.");
-                }
 
-                currentQuestionIndex++;
+                    if (allCorrect)
+                    {
+                        RAnswerUser++;
+                        var msg = new MsgBox("Правильный ответ", "Результат");
+                        msg.ShowDialog();
+                    }
+                    else
+                    {
+                        AnswerUser++;
+                        var msgError = new MsgBoxError("Неправильный ответ", "Результат");
+                        msgError.ShowDialog();
+                    }
 
-                ShowNextQuestion();
+                    currentQuestionIndex++;
+
+                    ShowNextQuestion();
+                }
             }
+            else
+            {
+                var msgError = new MsgBoxError("Вы забыли выбрать ответ", "Message Error");
+                msgError.ShowDialog();
+            }
+
         }
-
-
 
     }
 }

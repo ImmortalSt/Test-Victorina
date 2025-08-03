@@ -66,6 +66,7 @@ namespace Test_Victorina
         }
         private void button_Reg_Click(object sender, EventArgs e)
         {
+            Hide();
             Register register = new Register();
             register.ShowDialog();
         }
@@ -111,6 +112,7 @@ namespace Test_Victorina
             int count = ValidateUser(login, password);
             if (count == 1)
             {
+                Hide();
                 TestMain testMain = new TestMain(login);
                 testMain.ShowDialog();
 
@@ -133,7 +135,70 @@ namespace Test_Victorina
 
         private void button_Exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
+        }
+
+        //показть пароль, если его забыл
+        private string GetResertPassword()
+        {
+            string login = textBox_Log.Text.Trim();
+            string password = string.Empty;
+
+            if (string.IsNullOrEmpty(login))
+            {
+                var msgError = new MsgBoxError("Вы забыли внести логин", "Message Error");
+                msgError.ShowDialog();
+                return string.Empty; // Возвращаем пустое значение при ошибке
+            }
+
+            try
+            {
+                string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+
+                using (var connection = new MySqlConnection(connect))
+                {
+                    connection.Open();
+
+                    string selectSql = @"SELECT Password_User
+                                FROM LoginPassword 
+                                WHERE Login_User = @Login_User";
+
+                    var command = new MySqlCommand(selectSql, connection);
+
+                    command.Parameters.AddWithValue("@Login_User", login);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            password = reader.GetString(0);
+                        }
+                        else
+                        {
+                            var msgError = new MsgBoxError("Пользователь не найден", "Message Error");
+                            msgError.ShowDialog();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var msgError = new MsgBoxError($"Произошла ошибка: {ex.Message}", "Message Error");
+                msgError.ShowDialog();
+            }
+
+            return password;
+        }
+
+        private void button_ResetPassword_Click(object sender, EventArgs e)
+        {
+            string password = GetResertPassword();
+            if (!string.IsNullOrEmpty(password))
+            {
+                var msg = new MsgBox($"Ваш пароль: {password}", "Восстановление пароля");
+                msg.ShowDialog();
+            }
+
         }
     }
 }

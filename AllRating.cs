@@ -23,7 +23,7 @@ namespace Test_Victorina
             int count = ValidateCountUsers();
             label_CountAll.Text = count.ToString();
 
-            //заполнение рейтинга в DataGridView(
+            //заполнение рейтинга в DataGridView
             LoadRatingIntoDataGridView();
 
 
@@ -38,8 +38,8 @@ namespace Test_Victorina
             using (var connection = new MySqlConnection(connect))
             {
                 connection.Open();
-                string selectCataloge = "SELECT COUNT(*) FROM Result";
-                using (var command = new MySqlCommand(selectCataloge, connection))
+                string selectSql = "SELECT COUNT(*) FROM Result";
+                using (var command = new MySqlCommand(selectSql, connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {

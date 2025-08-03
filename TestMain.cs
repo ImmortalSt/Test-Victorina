@@ -13,12 +13,12 @@ namespace Test_Victorina
             InitializeComponent();
             _login = login;
             label_User.Text = login;
-            int a = 0;
         }
 
         private void button_Exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
+
         }
 
         private void button_Admin_Click(object sender, EventArgs e)
@@ -29,17 +29,33 @@ namespace Test_Victorina
 
         private void button_Test_Click(object sender, EventArgs e)
         {
+            Hide();
             Test test = new Test(_login);
             test.ShowDialog();
         }
 
         //показ рейтинга всех участников
 
-
         private void button_Reting_Click(object sender, EventArgs e)
         {
             AllRating allRating = new AllRating();
             allRating.ShowDialog();
+        }
+
+        //показать мой рейтинг
+
+
+        private void button_MyReting_Click(object sender, EventArgs e)
+        {
+            MyRating myRating = new MyRating(_login);
+            myRating.ShowDialog();
+        }
+
+        private void button_Resert_Click(object sender, EventArgs e)
+        {
+            Hide();
+            Form1_Enter form1_Enter = new Form1_Enter();
+            form1_Enter.ShowDialog();
         }
     }
 }

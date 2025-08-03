@@ -40,6 +40,7 @@
             this.button_Exit = new System.Windows.Forms.Button();
             this.label_NameUser = new System.Windows.Forms.Label();
             this.label_User = new System.Windows.Forms.Label();
+            this.button_Resert = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelMain
@@ -66,7 +67,7 @@
             // button_Test
             // 
             this.button_Test.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Test.Location = new System.Drawing.Point(552, 270);
+            this.button_Test.Location = new System.Drawing.Point(552, 259);
             this.button_Test.Name = "button_Test";
             this.button_Test.Size = new System.Drawing.Size(230, 47);
             this.button_Test.TabIndex = 12;
@@ -77,7 +78,7 @@
             // button_Reting
             // 
             this.button_Reting.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Reting.Location = new System.Drawing.Point(552, 362);
+            this.button_Reting.Location = new System.Drawing.Point(552, 340);
             this.button_Reting.Name = "button_Reting";
             this.button_Reting.Size = new System.Drawing.Size(230, 47);
             this.button_Reting.TabIndex = 13;
@@ -88,12 +89,13 @@
             // button_MyReting
             // 
             this.button_MyReting.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_MyReting.Location = new System.Drawing.Point(552, 462);
+            this.button_MyReting.Location = new System.Drawing.Point(552, 418);
             this.button_MyReting.Name = "button_MyReting";
             this.button_MyReting.Size = new System.Drawing.Size(230, 47);
             this.button_MyReting.TabIndex = 14;
             this.button_MyReting.Text = "Мой рейтинг";
             this.button_MyReting.UseVisualStyleBackColor = true;
+            this.button_MyReting.Click += new System.EventHandler(this.button_MyReting_Click);
             // 
             // label4
             // 
@@ -109,7 +111,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(29, 281);
+            this.label1.Location = new System.Drawing.Point(29, 270);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(274, 25);
             this.label1.TabIndex = 15;
@@ -119,7 +121,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(29, 373);
+            this.label2.Location = new System.Drawing.Point(29, 351);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(352, 25);
             this.label2.TabIndex = 16;
@@ -129,7 +131,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(29, 473);
+            this.label3.Location = new System.Drawing.Point(29, 429);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(407, 25);
             this.label3.TabIndex = 17;
@@ -138,7 +140,7 @@
             // button_Exit
             // 
             this.button_Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Exit.Location = new System.Drawing.Point(552, 542);
+            this.button_Exit.Location = new System.Drawing.Point(552, 547);
             this.button_Exit.Name = "button_Exit";
             this.button_Exit.Size = new System.Drawing.Size(230, 47);
             this.button_Exit.TabIndex = 18;
@@ -166,11 +168,23 @@
             this.label_User.TabIndex = 20;
             this.label_User.Text = "...";
             // 
+            // button_Resert
+            // 
+            this.button_Resert.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_Resert.Location = new System.Drawing.Point(106, 547);
+            this.button_Resert.Name = "button_Resert";
+            this.button_Resert.Size = new System.Drawing.Size(286, 47);
+            this.button_Resert.TabIndex = 21;
+            this.button_Resert.Text = "Сменить пользователя";
+            this.button_Resert.UseVisualStyleBackColor = true;
+            this.button_Resert.Click += new System.EventHandler(this.button_Resert_Click);
+            // 
             // TestMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 617);
+            this.Controls.Add(this.button_Resert);
             this.Controls.Add(this.label_User);
             this.Controls.Add(this.label_NameUser);
             this.Controls.Add(this.button_Exit);
@@ -204,5 +218,6 @@
         private System.Windows.Forms.Button button_Exit;
         private System.Windows.Forms.Label label_NameUser;
         private System.Windows.Forms.Label label_User;
+        private System.Windows.Forms.Button button_Resert;
     }
 }

@@ -72,8 +72,10 @@ namespace Test_Victorina
 
             var msg = new MsgBox("Регистрация прошла успешно!", "Регистрация");
             msg.ShowDialog();
-            //MessageBox.Show("Pегистрация прошла успешно!");
+
             Hide();
+            Form1_Enter form1_Enter = new Form1_Enter();
+            form1_Enter.ShowDialog();
         }
     }
 }
