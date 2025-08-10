@@ -5,9 +5,13 @@ namespace Test_Victorina
 {
     public partial class Password : Form
     {
+        private string _login;
+        private TestMain _main;
+
         public Password()
         {
             InitializeComponent();
+            this._main = _main;
         }
 
         private void button_Exit_Click(object sender, EventArgs e)
@@ -20,7 +24,8 @@ namespace Test_Victorina
             string password = textBox_Pas.Text; // Используем оригинальный текст
             if (password == "admin")
             {
-                Admin admin = new Admin();
+                Hide();
+                Admin admin = new Admin(_login, _main);
                 admin.ShowDialog();
             }
             else

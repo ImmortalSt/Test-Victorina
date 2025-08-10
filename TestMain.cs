@@ -25,6 +25,7 @@ namespace Test_Victorina
         {
             Password password = new Password();
             password.ShowDialog();
+
         }
 
         private void button_Test_Click(object sender, EventArgs e)

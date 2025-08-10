@@ -7,9 +7,15 @@ namespace Test_Victorina
 {
     public partial class Admin : Form
     {
-        public Admin()
+        private string _login;
+        private TestMain _main;
+
+        public Admin(string login, TestMain _main)
         {
             InitializeComponent();
+            this._main = _main;
+            _login = login;
+
         }
 
         //добавление темы в Каталог
@@ -327,19 +333,19 @@ namespace Test_Victorina
 
         private void btn_DelThema_Click(object sender, EventArgs e)
         {
-            AdminDelete adminDel = new AdminDelete();
-            adminDel.ShowDialog();
+            //AdminDelete adminDel = new AdminDelete();
+            //adminDel.ShowDialog();
 
 
-            //// выбор темы из ComboBox
+            // выбор темы из ComboBox
             //string selectedThema = cB_Cataloge.SelectedItem?.ToString();
 
             //if (!string.IsNullOrEmpty(selectedThema))
             //{
-            //    // Удаление темы из базы данных
+            //     Удаление темы из базы данных
             //    DeleteThema(selectedThema);
 
-            //    // Удаление темы из ComboBox
+            //     Удаление темы из ComboBox
             //    cB_Cataloge.Items.Remove(selectedThema);
 
             //    MessageBox.Show("Тема успешно удалена.");
@@ -350,6 +356,11 @@ namespace Test_Victorina
             //}
         }
 
+        private void btn_Reset_Click(object sender, EventArgs e)
+        {
+            Hide();
+            _main.ShowDialog();
+        }
     }
 
 }

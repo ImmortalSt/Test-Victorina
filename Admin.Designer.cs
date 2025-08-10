@@ -48,6 +48,7 @@
             this.tB_RAnsw1 = new System.Windows.Forms.TextBox();
             this.button_Exit = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btn_Reset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_Admin
@@ -231,9 +232,9 @@
             // button_Exit
             // 
             this.button_Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Exit.Location = new System.Drawing.Point(875, 551);
+            this.button_Exit.Location = new System.Drawing.Point(875, 620);
             this.button_Exit.Name = "button_Exit";
-            this.button_Exit.Size = new System.Drawing.Size(170, 59);
+            this.button_Exit.Size = new System.Drawing.Size(170, 48);
             this.button_Exit.TabIndex = 22;
             this.button_Exit.Text = "Выход";
             this.button_Exit.UseVisualStyleBackColor = true;
@@ -249,11 +250,23 @@
             this.label4.TabIndex = 23;
             this.label4.Text = "* Возможны 2 варианта правильных ответов";
             // 
+            // btn_Reset
+            // 
+            this.btn_Reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Reset.Location = new System.Drawing.Point(875, 551);
+            this.btn_Reset.Name = "btn_Reset";
+            this.btn_Reset.Size = new System.Drawing.Size(170, 48);
+            this.btn_Reset.TabIndex = 24;
+            this.btn_Reset.Text = "<-";
+            this.btn_Reset.UseVisualStyleBackColor = true;
+            this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
+            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 686);
+            this.Controls.Add(this.btn_Reset);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.tB_RAnsw2);
@@ -304,5 +317,6 @@
         private System.Windows.Forms.TextBox tB_RAnsw1;
         private System.Windows.Forms.Button button_Exit;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_Reset;
     }
 }
