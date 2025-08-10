@@ -8,10 +8,11 @@ namespace Test_Victorina
         private string _login;
         private TestMain _main;
 
-        public Password()
+        public Password(string login)
         {
             InitializeComponent();
-            this._main = _main;
+            //this._main = _main;
+            _login = login;
         }
 
         private void button_Exit_Click(object sender, EventArgs e)
@@ -25,7 +26,7 @@ namespace Test_Victorina
             if (password == "admin")
             {
                 Hide();
-                Admin admin = new Admin(_login, _main);
+                Admin admin = new Admin(_login);
                 admin.ShowDialog();
             }
             else

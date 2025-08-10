@@ -23,7 +23,8 @@ namespace Test_Victorina
 
         private void button_Admin_Click(object sender, EventArgs e)
         {
-            Password password = new Password();
+            Hide();
+            Password password = new Password(_login);
             password.ShowDialog();
 
         }
@@ -36,7 +37,6 @@ namespace Test_Victorina
         }
 
         //показ рейтинга всех участников
-
         private void button_Reting_Click(object sender, EventArgs e)
         {
             AllRating allRating = new AllRating();
@@ -44,8 +44,6 @@ namespace Test_Victorina
         }
 
         //показать мой рейтинг
-
-
         private void button_MyReting_Click(object sender, EventArgs e)
         {
             MyRating myRating = new MyRating(_login);

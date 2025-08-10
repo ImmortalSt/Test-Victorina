@@ -76,6 +76,7 @@
             this.btn_DelThema.TabIndex = 6;
             this.btn_DelThema.Text = "Удалить тему";
             this.btn_DelThema.UseVisualStyleBackColor = true;
+            this.btn_DelThema.Click += new System.EventHandler(this.btn_DelThema_Click);
             // 
             // cB_Cataloge
             // 

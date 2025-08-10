@@ -8,13 +8,13 @@ namespace Test_Victorina
     public partial class Admin : Form
     {
         private string _login;
-        private TestMain _main;
 
-        public Admin(string login, TestMain _main)
+        public Admin(string login)
         {
             InitializeComponent();
-            this._main = _main;
+            //this._main = _main;
             _login = login;
+            label_User.Text = login;
 
         }
 
@@ -59,24 +59,6 @@ namespace Test_Victorina
 
             }
             return list;
-        }
-
-        //удалить из БД тему 
-        private static void DeleteThema(string thema)
-        {
-            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
-
-            using (var connection = new MySqlConnection(connect))
-            {
-                connection.Open();
-                string deletetSql = "DELETE FROM Cataloge WHERE Thema = @thema";
-                using (var command = new MySqlCommand(deletetSql, connection))
-                {
-                    command.Parameters.AddWithValue("@thema", thema);
-
-                    command.ExecuteNonQuery();
-                }
-            }
         }
 
         //получение из БД ID темы
@@ -185,11 +167,9 @@ namespace Test_Victorina
             }
         }
 
-
         private void cB_Cataloge_SelectedIndexChanged(object sender, EventArgs e)
         {
             // использовать для обработки изменения выбранного элемента в ComboBox
-
 
         }
 
@@ -219,7 +199,9 @@ namespace Test_Victorina
             }
             else
             {
-                MessageBox.Show("Пожалуйста, введите тему и выберите каталог.");
+                var msgError = new MsgBoxError("Пожалуйста, введите тему", "Message Error");
+                msgError.ShowDialog();
+
             }
 
         }
@@ -238,13 +220,16 @@ namespace Test_Victorina
             if (!string.IsNullOrEmpty(ques) && !string.IsNullOrEmpty(thema) && id_cat > 0)
             {
                 AddQuestion(ques, id_cat);
-                MessageBox.Show("Вопрос успешно добавлен.");
+                var msg = new MsgBox("Вопрос успешно добавлен", "Добавление вопроса");
+                msg.ShowDialog();
+
                 btn_Ques.Enabled = false;
 
             }
             else
             {
-                MessageBox.Show("Пожалуйста, введите вопрос и выберите тему.");
+                var msgError = new MsgBoxError("Пожалуйста, введите вопрос и выберите тему", "Message Error");
+                msgError.ShowDialog();
             }
         }
 
@@ -261,12 +246,15 @@ namespace Test_Victorina
                 AddAnswer(answ1, id_ques);
                 AddAnswer(answ2, id_ques);
                 AddAnswer(answ3, id_ques);
-                MessageBox.Show("Ответы успешно добавлены.");
+                var msg = new MsgBox("Ответы успешно добавлены", "Добавление ответа");
+                msg.ShowDialog();
+
                 btn_Answ.Enabled = false;
             }
             else
             {
-                MessageBox.Show("Вопрос не найден. Пожалуйста, добавьте вопрос сначала.");
+                var msgError = new MsgBoxError("Вопрос не найден. Пожалуйста, добавьте вопрос сначала", "Message Error");
+                msgError.ShowDialog();
             }
         }
 
@@ -281,7 +269,9 @@ namespace Test_Victorina
             {
                 AddRAnswer(RAnsw1Text, id_ques);
                 AddRAnswer(RAnsw2Text, id_ques);
-                MessageBox.Show("Правильне ответы успешно добавлены.");
+                var msg = new MsgBox("Правильне ответы успешно добавлены", "Добавление правильного ответа");
+                msg.ShowDialog();
+
                 textBox_Ques.Clear();
                 tB_Answ1.Clear();
                 tB_Answ2.Clear();
@@ -294,7 +284,9 @@ namespace Test_Victorina
             else if (!string.IsNullOrEmpty(ques) && !string.IsNullOrEmpty(RAnsw1Text) && id_ques > 0)
             {
                 AddRAnswer(RAnsw1Text, id_ques);
-                MessageBox.Show("Правильне ответы успешно добавлены.");
+                var msg = new MsgBox("Правильне ответы успешно добавлены", "Добавление правильного ответа");
+                msg.ShowDialog();
+
                 textBox_Ques.Clear();
                 tB_Answ1.Clear();
                 tB_Answ2.Clear();
@@ -307,7 +299,9 @@ namespace Test_Victorina
             else if (!string.IsNullOrEmpty(ques) && !string.IsNullOrEmpty(RAnsw2Text) && id_ques > 0)
             {
                 AddRAnswer(RAnsw2Text, id_ques);
-                MessageBox.Show("Правильне ответы успешно добавлены.");
+                var msg = new MsgBox("Правильне ответы успешно добавлены", "Добавление правильного ответа");
+                msg.ShowDialog();
+
                 textBox_Ques.Clear();
                 tB_Answ1.Clear();
                 tB_Answ2.Clear();
@@ -319,7 +313,9 @@ namespace Test_Victorina
             }
             else
             {
-                MessageBox.Show("Вопрос не найден. Пожалуйста, добавьте вопрос сначала.");
+                var msgError = new MsgBoxError("Введите варианты правильных ответов", "Message Error");
+                msgError.ShowDialog();
+
             }
 
         }
@@ -327,39 +323,25 @@ namespace Test_Victorina
         //выход
         private void button_Exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
 
         private void btn_DelThema_Click(object sender, EventArgs e)
         {
-            //AdminDelete adminDel = new AdminDelete();
-            //adminDel.ShowDialog();
-
-
-            // выбор темы из ComboBox
-            //string selectedThema = cB_Cataloge.SelectedItem?.ToString();
-
-            //if (!string.IsNullOrEmpty(selectedThema))
-            //{
-            //     Удаление темы из базы данных
-            //    DeleteThema(selectedThema);
-
-            //     Удаление темы из ComboBox
-            //    cB_Cataloge.Items.Remove(selectedThema);
-
-            //    MessageBox.Show("Тема успешно удалена.");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Пожалуйста, выберите тему для удаления.");
-            //}
+            Hide();
+            AdminDelete adminDel = new AdminDelete();
+            adminDel.ShowDialog();
         }
 
         private void btn_Reset_Click(object sender, EventArgs e)
         {
             Hide();
-            _main.ShowDialog();
+
+            // новый экземпляр формы TestMain с тем же логином
+            TestMain testForm = new TestMain(_login);
+            testForm.Show();
+
         }
     }
 

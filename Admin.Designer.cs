@@ -49,6 +49,7 @@
             this.button_Exit = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_Reset = new System.Windows.Forms.Button();
+            this.label_User = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_Admin
@@ -261,11 +262,22 @@
             this.btn_Reset.UseVisualStyleBackColor = true;
             this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
             // 
+            // label_User
+            // 
+            this.label_User.AutoSize = true;
+            this.label_User.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_User.Location = new System.Drawing.Point(423, 15);
+            this.label_User.Name = "label_User";
+            this.label_User.Size = new System.Drawing.Size(30, 25);
+            this.label_User.TabIndex = 25;
+            this.label_User.Text = "...";
+            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 686);
+            this.Controls.Add(this.label_User);
             this.Controls.Add(this.btn_Reset);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button_Exit);
@@ -318,5 +330,6 @@
         private System.Windows.Forms.Button button_Exit;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_Reset;
+        private System.Windows.Forms.Label label_User;
     }
 }
