@@ -12,7 +12,6 @@ namespace Test_Victorina
         public Admin(string login)
         {
             InitializeComponent();
-            //this._main = _main;
             _login = login;
             label_User.Text = login;
 
@@ -330,7 +329,7 @@ namespace Test_Victorina
         private void btn_DelThema_Click(object sender, EventArgs e)
         {
             Hide();
-            AdminDelete adminDel = new AdminDelete();
+            AdminDelete adminDel = new AdminDelete(_login);
             adminDel.ShowDialog();
         }
 
@@ -342,6 +341,13 @@ namespace Test_Victorina
             TestMain testForm = new TestMain(_login);
             testForm.Show();
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Hide();
+            AdminRedaction adminRed = new AdminRedaction(_login);
+            adminRed.ShowDialog();
         }
     }
 

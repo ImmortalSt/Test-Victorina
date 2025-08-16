@@ -50,6 +50,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btn_Reset = new System.Windows.Forms.Button();
             this.label_User = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_Admin
@@ -105,11 +106,11 @@
             // btn_DelThema
             // 
             this.btn_DelThema.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_DelThema.Location = new System.Drawing.Point(875, 25);
+            this.btn_DelThema.Location = new System.Drawing.Point(875, 15);
             this.btn_DelThema.Name = "btn_DelThema";
-            this.btn_DelThema.Size = new System.Drawing.Size(170, 100);
+            this.btn_DelThema.Size = new System.Drawing.Size(170, 63);
             this.btn_DelThema.TabIndex = 5;
-            this.btn_DelThema.Text = "Переход в раздел\r\nУдаления";
+            this.btn_DelThema.Text = "Раздел\r\nУдаления";
             this.btn_DelThema.UseVisualStyleBackColor = true;
             this.btn_DelThema.Click += new System.EventHandler(this.btn_DelThema_Click);
             // 
@@ -272,11 +273,23 @@
             this.label_User.TabIndex = 25;
             this.label_User.Text = "...";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(875, 93);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(170, 63);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "Раздел\r\nРедактирования";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 686);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_User);
             this.Controls.Add(this.btn_Reset);
             this.Controls.Add(this.label4);
@@ -331,5 +344,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_Reset;
         private System.Windows.Forms.Label label_User;
+        private System.Windows.Forms.Button button1;
     }
 }
