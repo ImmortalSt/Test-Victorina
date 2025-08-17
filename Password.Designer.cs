@@ -73,6 +73,7 @@
             // 
             // textBox_Pas
             // 
+            this.textBox_Pas.CausesValidation = false;
             this.textBox_Pas.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox_Pas.Location = new System.Drawing.Point(433, 78);
             this.textBox_Pas.Name = "textBox_Pas";

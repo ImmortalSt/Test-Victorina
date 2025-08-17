@@ -218,7 +218,7 @@ namespace Test_Victorina
             {
                 connection.Open();
                 string selectID = @"SELECT ID FROM LoginPassword
-                                    WHERE LoginPassword.Name_User = @login";
+                                    WHERE LoginPassword.Login_User = @login";
 
                 var command = new MySqlCommand(selectID, connection);
                 command.Parameters.AddWithValue("@login", user);
@@ -268,6 +268,11 @@ namespace Test_Victorina
         //записать результат в БД
         private void SaveResult(int RAnswerUser, int AnswerUser, float result, int idCat, int idUser)
         {
+            if (idUser <= 0)
+            {
+                throw new Exception("Неверный ID пользователя");
+            }
+
             string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
 
             //string thema = cB_Cataloge.SelectedItem?.ToString();
