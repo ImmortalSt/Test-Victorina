@@ -25,6 +25,7 @@ namespace Test_Victorina
         {
             // получение количества записей в БД
             int count = ValidateCountTest(_user);
+            int a = 0;
             label_CountAll.Text = count.ToString();
 
             //заполнение рейтинга в DataGridView
@@ -46,7 +47,7 @@ namespace Test_Victorina
                     string selectSql = @"SELECT COUNT(*) 
                                 FROM Result r
                                 INNER JOIN LoginPassword lg ON lg.ID = r.ID_User
-                                WHERE lg.Name_User = @user";
+                                WHERE lg.Login_User = @user";
 
                     using (var command = new MySqlCommand(selectSql, connection))
                     {
@@ -89,13 +90,13 @@ namespace Test_Victorina
                                     FROM Result r
                                     INNER JOIN LoginPassword lg ON r.ID_User = lg.ID
                                     INNER JOIN Cataloge c ON r.ID_Cat = c.ID_Cat
-                                    WHERE lg.Name_User = @user                                    
+                                    WHERE lg.Login_User = @user                                    
                                     ORDER BY r.Prosent DESC";
 
                 using (var command = new MySqlCommand(selectSql, connection))
                 {
                     command.Parameters.AddWithValue("@user", user);
-
+                    int a = 0;
                     using (var adapter = new MySqlDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();

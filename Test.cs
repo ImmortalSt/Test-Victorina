@@ -202,9 +202,9 @@ namespace Test_Victorina
         // Получить ID пользователя
         private int GetIDUser()
         {
-            string user = _login;
+            //string user = _login;
 
-            if (string.IsNullOrEmpty(user))
+            if (string.IsNullOrEmpty(_login))
             {
                 throw new InvalidOperationException("Логин не указан");
             }
@@ -221,13 +221,14 @@ namespace Test_Victorina
                                     WHERE LoginPassword.Login_User = @login";
 
                 var command = new MySqlCommand(selectID, connection);
-                command.Parameters.AddWithValue("@login", user);
+                command.Parameters.AddWithValue("@login", _login);
 
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         idUser = reader.GetInt32(0);
+                        int a = 0;
                     }
                 }
             }
