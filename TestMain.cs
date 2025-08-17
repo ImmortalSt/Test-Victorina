@@ -6,14 +6,30 @@ namespace Test_Victorina
     public partial class TestMain : Form
     {
         private string _login;
+        private bool _admin = false;
 
         // Конструктор для передачи ссылки на форму
-        public TestMain(string login)
+        public TestMain(string login, bool admin)
         {
             InitializeComponent();
             _login = login;
             label_User.Text = login;
+            _admin = admin;
+
+            if (!_admin)
+            {
+                label4.Visible = false;
+                button_Admin.Visible = false;
+            }
+            else
+            {
+                label4.Visible = true;
+                button_Admin.Visible = true;
+            }
+
         }
+
+
 
         private void button_Exit_Click(object sender, EventArgs e)
         {
@@ -24,7 +40,7 @@ namespace Test_Victorina
         private void button_Admin_Click(object sender, EventArgs e)
         {
             Hide();
-            Password password = new Password(_login);
+            Password password = new Password(_login, _admin);
             password.ShowDialog();
 
         }

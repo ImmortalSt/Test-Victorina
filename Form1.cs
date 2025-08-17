@@ -1,13 +1,13 @@
 ﻿using MySqlConnector;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Test_Victorina
 {
-
     public partial class Form1_Enter : Form
     {
-        private string originalPassword = string.Empty;
+        private bool _admin = false;
 
         public Form1_Enter()
         {
@@ -15,6 +15,7 @@ namespace Test_Victorina
             InitializeComponent();
             textBox_Pas.TextChanged += textBox_Pas_TextChanged;
         }
+
         //создание БД для пользователя
         private static void CreateDatabaseAndtable()
         {
@@ -27,7 +28,8 @@ namespace Test_Victorina
 	                    ID	INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	                    Name_User	VARCHAR(50) NOT NULL,
 	                    Login_User	VARCHAR(50) NOT NULL UNIQUE,
-	                    Password_User	VARCHAR(50) NOT NULL UNIQUE);
+	                    Password_User	VARCHAR(50) NOT NULL UNIQUE,
+                        Admin BOOLEAN NOT NULL);
 
                     CREATE TABLE IF NOT EXISTS Cataloge (
 	                    ID_Cat	INTEGER  NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -64,6 +66,7 @@ namespace Test_Victorina
                 }
             }
         }
+
         private void button_Reg_Click(object sender, EventArgs e)
         {
             Hide();
@@ -79,7 +82,7 @@ namespace Test_Victorina
             {
                 int count = 0;
                 connection.Open();
-                string selectSql = "SELECT COUNT(*) FROM LoginPassword WHERE Login_User = @login AND Password_User = @password";
+                string selectSql = @"SELECT COUNT(*) FROM LoginPassword WHERE Login_User = @login AND Password_User = @password";
                 using (var command = new MySqlCommand(selectSql, connection))
                 {
                     command.Parameters.AddWithValue("@login", login);
@@ -103,6 +106,32 @@ namespace Test_Victorina
             //originalPassword = textBox_Pas.Text;
         }
 
+        // проверка на администратора
+        static bool ValidateAdmin(string login)
+        {
+            string connect = @"Server = 141.8.192.217; DataBase = a1153826_test; User ID = a1153826_test; Password = sev09rus";
+            using (var connection = new MySqlConnection(connect))
+            {
+                bool isAdmin = false;
+                connection.Open();
+                string selectSql = @"SELECT Admin FROM LoginPassword WHERE Login_User = @login";
+                using (var command = new MySqlCommand(selectSql, connection))
+                {
+                    command.Parameters.AddWithValue("@login", login);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            isAdmin = reader.GetBoolean(0);
+                            break;
+                        }
+                    }
+                }
+                return isAdmin;
+            }
+        }
+
         //вход в программу теста
         private void button_Enter_Click(object sender, EventArgs e)
         {
@@ -110,10 +139,11 @@ namespace Test_Victorina
             string password = textBox_Pas.Text; // Используем оригинальный текст
 
             int count = ValidateUser(login, password);
+            _admin = ValidateAdmin(login);
             if (count == 1)
             {
                 Hide();
-                TestMain testMain = new TestMain(login);
+                TestMain testMain = new TestMain(login, _admin);
                 testMain.ShowDialog();
 
             }
@@ -200,5 +230,25 @@ namespace Test_Victorina
             }
 
         }
+
+        //показ * вместо пароля при нажатии на картинку
+        private bool closeOpen = true;
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            if (closeOpen)
+            {
+                closeOpen = false;
+                pictureBox2.Image = Image.FromFile("icon/show.jpg");
+                textBox_Pas.PasswordChar = '\0';
+            }
+            else
+            {
+                closeOpen = true;
+                pictureBox2.Image = Image.FromFile("icon/clos.jpg");
+                textBox_Pas.PasswordChar = '*';
+            }
+        }
+
     }
 }

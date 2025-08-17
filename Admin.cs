@@ -8,13 +8,14 @@ namespace Test_Victorina
     public partial class Admin : Form
     {
         private string _login;
+        private bool _admin = false;
 
-        public Admin(string login)
+        public Admin(string login, bool admin)
         {
             InitializeComponent();
             _login = login;
             label_User.Text = login;
-
+            _admin = admin;
         }
 
         //добавление темы в Каталог
@@ -329,7 +330,7 @@ namespace Test_Victorina
         private void btn_DelThema_Click(object sender, EventArgs e)
         {
             Hide();
-            AdminDelete adminDel = new AdminDelete(_login);
+            AdminDelete adminDel = new AdminDelete(_login, _admin);
             adminDel.ShowDialog();
         }
 
@@ -338,7 +339,7 @@ namespace Test_Victorina
             Hide();
 
             // новый экземпляр формы TestMain с тем же логином
-            TestMain testForm = new TestMain(_login);
+            TestMain testForm = new TestMain(_login, _admin);
             testForm.Show();
 
         }
@@ -346,7 +347,7 @@ namespace Test_Victorina
         private void button1_Click(object sender, EventArgs e)
         {
             Hide();
-            AdminRedaction adminRed = new AdminRedaction(_login);
+            AdminRedaction adminRed = new AdminRedaction(_login, _admin);
             adminRed.ShowDialog();
         }
     }

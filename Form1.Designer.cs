@@ -39,7 +39,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button_Exit = new System.Windows.Forms.Button();
             this.button_ResetPassword = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -75,6 +77,7 @@
             this.textBox_Pas.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox_Pas.Location = new System.Drawing.Point(441, 172);
             this.textBox_Pas.Name = "textBox_Pas";
+            this.textBox_Pas.PasswordChar = '*';
             this.textBox_Pas.Size = new System.Drawing.Size(236, 31);
             this.textBox_Pas.TabIndex = 4;
             // 
@@ -142,11 +145,23 @@
             this.button_ResetPassword.UseVisualStyleBackColor = true;
             this.button_ResetPassword.Click += new System.EventHandler(this.button_ResetPassword_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(683, 172);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(34, 31);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 10;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
             // Form1_Enter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(861, 549);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button_ResetPassword);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.pictureBox1);
@@ -160,6 +175,7 @@
             this.Name = "Form1_Enter";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,6 +193,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_Exit;
         private System.Windows.Forms.Button button_ResetPassword;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

@@ -8,16 +8,18 @@ namespace Test_Victorina
     public partial class AdminRedaction : Form
     {
         private string _login;
+        private bool _isAdmin;
 
         private List<string> currentQuest;            //список вопросов
         private List<string> currentAnw;              //список ответов
         private List<string> currentRAnw;             //список правильных ответов
         private int selectedQuestionId;
 
-        public AdminRedaction(string login)
+        public AdminRedaction(string login, bool isAdmin)
         {
             InitializeComponent();
             _login = login;
+            _isAdmin = isAdmin;
         }
 
         private void button_Exit_Click(object sender, EventArgs e)
@@ -30,7 +32,7 @@ namespace Test_Victorina
             Hide();
 
             // новый экземпляр формы TestMain с тем же логином
-            Admin admin = new Admin(_login);
+            Admin admin = new Admin(_login, _isAdmin);
             admin.Show();
         }
 

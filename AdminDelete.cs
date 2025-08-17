@@ -8,12 +8,13 @@ namespace Test_Victorina
     public partial class AdminDelete : Form
     {
         private string _login;
+        private bool _isAdmin;
 
-        public AdminDelete(string login)
+        public AdminDelete(string login, bool isAdmin)
         {
             InitializeComponent();
             _login = login;
-
+            _isAdmin = isAdmin;
         }
 
         private void AdminDelete_Load(object sender, EventArgs e)
@@ -37,7 +38,7 @@ namespace Test_Victorina
             Hide();
 
             // новый экземпляр формы TestMain с тем же логином
-            Admin admin = new Admin(_login);
+            Admin admin = new Admin(_login, _isAdmin);
             int a = 0;
             admin.Show();
         }

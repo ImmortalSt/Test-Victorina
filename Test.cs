@@ -9,6 +9,7 @@ namespace Test_Victorina
     {
         // Сохраняем ссылку на существующую форму входа
         private string _login;
+        private bool _admin;
 
         // Конструктор для передачи ссылки на форму
         public Test(string login)
@@ -26,7 +27,7 @@ namespace Test_Victorina
         private void btn_Exit_Click(object sender, EventArgs e)
         {
             Hide();
-            TestMain testMain = new TestMain(_login);
+            TestMain testMain = new TestMain(_login, _admin);
             testMain.ShowDialog();
         }
 
@@ -412,7 +413,7 @@ namespace Test_Victorina
                     msg.ShowDialog();
 
                     Hide();
-                    TestMain testMain = new TestMain(_login);
+                    TestMain testMain = new TestMain(_login, _admin);
                     testMain.ShowDialog();
                 }
 
@@ -423,7 +424,7 @@ namespace Test_Victorina
                     msg.ShowDialog();
 
                     Hide();
-                    TestMain testMain = new TestMain(_login);
+                    TestMain testMain = new TestMain(_login, _admin);
                     testMain.ShowDialog();
                 }
                 else if (prevResult > result)
@@ -433,7 +434,7 @@ namespace Test_Victorina
                     msg.ShowDialog();
 
                     Hide();
-                    TestMain testMain = new TestMain(_login);
+                    TestMain testMain = new TestMain(_login, _admin);
                     testMain.ShowDialog();
                 }
             }
